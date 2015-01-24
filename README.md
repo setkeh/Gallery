@@ -1,4 +1,6 @@
 # Gallery
+
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/setkeh/Gallery?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 GoLang Base64 Image Gallery
 
 [![Build Status](https://drone.io/github.com/setkeh/Gallery/status.png)](https://drone.io/github.com/setkeh/Gallery/latest)
