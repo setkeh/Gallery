@@ -7,7 +7,7 @@ The Basics are create a REST Server in GO that connectes to a mongo server to st
 
 What Needs Doing:
   1. Create the Rest Server.
-  2. Create the Mongo Connectors.
+ ~~ 2. Create the Mongo Connectors.~~ This Now Needs Testing.
   3. Wirte an Easy way to Submit to the API.
 
 Thoughts and Considerations:
