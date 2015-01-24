@@ -1,18 +1,18 @@
 package main
 
 import (
-	"encoding/base64"
+	//"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
-	"net/http"
+	//"net/http"
 	"os"
-	"time"
+	//"time"
 )
 
 type Image struct {
-	image String
+	image string
 }
 
 type Config struct {

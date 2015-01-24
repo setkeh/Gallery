@@ -1,6 +1,9 @@
 # Gallery
 GoLang Base64 Image Gallery
 
+[![Build Status](https://drone.io/github.com/setkeh/Gallery/status.png)](https://drone.io/github.com/setkeh/Gallery/latest)
+<img src="http://img.shields.io/gratipay/setkeh.svg">
+
 Another Learn Go project.
 
 The Basics are create a REST Server in GO that connectes to a mongo server to store/retrive Base64 Images,.
