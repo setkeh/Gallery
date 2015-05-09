@@ -1,39 +1,48 @@
 package main
 
 import (
-	//"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
+	"log"
 	"net/http"
 	"os"
-	//"time"
+)
+
+var (
+	mdbSession *mgo.Session
 )
 
 type Image struct {
-	image string
+	Name string
+}
+
+type Person struct {
+	Id int
 }
 
 type Config struct {
 	Mongo string
 }
 
-func db(d string) {
-	session, err := mgo.Dial(config.Mongo)
+func db(d string, config *Config) {
+	// Save the connection session so that we can access the DB as a global
+	mdbSession, err := mgo.Dial(config.Mongo)
 	if err != nil {
 		panic(err)
 	}
-	defer session.Close()
+	defer mdbSession.Close()
 
-	c := session.DB("Gallery").C("images")
-	err = c.Insert(&image{d})
+	c := mdbSession.DB("Gallery").C("images")
+	image := &Image{d}
+	err = c.Insert(image.Name)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	result := Person{}
+	result := Person{1}
 	err = c.Find(bson.M{"image": d}).One(&result)
 	if err != nil {
 		log.Fatal(err)
