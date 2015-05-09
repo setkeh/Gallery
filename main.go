@@ -4,9 +4,10 @@ import (
 	//"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
-	//"net/http"
+	"net/http"
 	"os"
 	//"time"
 )
@@ -40,7 +41,12 @@ func db(d string) {
 
 }
 
-func main() {
+// Request handler sets the response context
+func PingHandler(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": "PONG!"})
+}
+
+func init() {
 	file, err := os.Open("config.json")
 
 	if err != nil {
@@ -52,4 +58,16 @@ func main() {
 	decoder := json.NewDecoder(file)
 	config := &Config{}
 	decoder.Decode(&config)
+}
+
+func main() {
+	// REST server
+	server := gin.Default()
+
+	// Routes
+	server.GET("/ping", PingHandler)
+	server.GET("/", PingHandler) // Change the handler to taste
+
+	// Start server on localhost:3000
+	server.Run(":3000")
 }
