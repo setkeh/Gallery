@@ -11,9 +11,10 @@ Another Learn Go project.
 The Basics are create a REST Server in GO that connectes to a mongo server to store/retrive Base64 Images,.
 
 What Needs Doing:
-  1. Create the Rest Server.
-  2. ~~Create the Mongo Connectors.~~ 
+  1. ~~Create the Rest Server.~~
+  2. ~~Create the Mongo Connectors.~~
   3. Mongo Connectors Now Need Testing.
+  4. Run Tests on the Rest Server Kindly provided by Darthlukan.
   4. Wirte an Easy way to Submit to the API.
 
 Thoughts and Considerations:
