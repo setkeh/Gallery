@@ -8,7 +8,6 @@ import (
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"log"
-	"net/http"
 	"os"
 	"time"
 )
@@ -48,11 +47,6 @@ func db(d string, config *Config) {
 
 }
 
-// Request handler sets the response context
-func PingHandler(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": "PONG!"})
-}
-
 func init() {
 	file, err := os.Open("config.json")
 
@@ -73,6 +67,11 @@ func main() {
 
 	// Routes
 	server.GET("/ping", PingHandler)
+	server.GET("/stats", GetAllStats)
+	server.GET("/image", GetAllImages)
+	server.POST("/image", CreateImage)
+	server.GET("/image/:id", GetImage)
+	server.POST("/image/:id", UpdateImage)
 	server.GET("/", PingHandler) // Change the handler to taste
 
 	// Start server on localhost:3000
