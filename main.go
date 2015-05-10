@@ -35,7 +35,7 @@ func db(d string, config *Config) {
 	}
 	defer mdbSession.Close()
 
-	c := mdbSession.DB("Gallery").C("images")
+	c := mdbSession.DB(config.Database).C(config.Collection)
 	image := &Image{d}
 	err = c.Insert(image.Name)
 	if err != nil {

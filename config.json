@@ -1,3 +1,5 @@
 {
-	"Mongo": "127.0.0.1"
+	"Mongo": "127.0.0.1",
+	"Database": "Gallery",
+	"Collection": "Images"
 }
