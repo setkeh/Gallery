@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -9,22 +10,17 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
 var (
 	mdbSession *mgo.Session
 )
 
-type Image struct {
-	Name string
-}
-
-type Person struct {
-	Id int
-}
-
 type Config struct {
-	Mongo string
+	Mongo      string
+	Database   string
+	Collection string
 }
 
 func db(d string, config *Config) {
@@ -36,8 +32,10 @@ func db(d string, config *Config) {
 	defer mdbSession.Close()
 
 	c := mdbSession.DB(config.Database).C(config.Collection)
-	image := &Image{d}
-	err = c.Insert(image.Name)
+	imgObjId := bson.NewObjectId()
+	imgData := base64.StdEncoding.EncodeToString([]byte("image data converted to base64 string"))
+	image := &Image{imgObjId, "Test", time.Now(), imgData}
+	err = c.Insert(image)
 	if err != nil {
 		log.Fatal(err)
 	}
