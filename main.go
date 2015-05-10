@@ -1,30 +1,25 @@
 package main
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"log"
-	"net/http"
 	"os"
+	"time"
 )
 
 var (
 	mdbSession *mgo.Session
 )
 
-type Image struct {
-	Name string
-}
-
-type Person struct {
-	Id int
-}
-
 type Config struct {
-	Mongo string
+	Mongo      string
+	Database   string
+	Collection string
 }
 
 func db(d string, config *Config) {
@@ -36,8 +31,10 @@ func db(d string, config *Config) {
 	defer mdbSession.Close()
 
 	c := mdbSession.DB(config.Database).C(config.Collection)
-	image := &Image{d}
-	err = c.Insert(image.Name)
+	imgObjId := bson.NewObjectId()
+	imgData := base64.StdEncoding.EncodeToString([]byte("image data converted to base64 string"))
+	image := &Image{imgObjId, "Test", time.Now(), imgData}
+	err = c.Insert(image)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -48,11 +45,6 @@ func db(d string, config *Config) {
 		log.Fatal(err)
 	}
 
-}
-
-// Request handler sets the response context
-func PingHandler(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": "PONG!"})
 }
 
 func init() {
@@ -75,6 +67,11 @@ func main() {
 
 	// Routes
 	server.GET("/ping", PingHandler)
+	server.GET("/stats", GetAllStats)
+	server.GET("/image", GetAllImages)
+	server.POST("/image", CreateImage)
+	server.GET("/image/:id", GetImage)
+	server.POST("/image/:id", UpdateImage)
 	server.GET("/", PingHandler) // Change the handler to taste
 
 	// Start server on localhost:3000
